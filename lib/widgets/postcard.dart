@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:greenie/assets/globals.dart';
 import 'package:greenie/assets/post.dart';
 import 'package:greenie/pages/userpage.dart';
 import 'package:share_plus/share_plus.dart';
@@ -83,7 +84,7 @@ class _PostCardState extends State<PostCard> {
                 Row(
                   children: [
                     IconButton(
-                      color: likedByMe ? Colors.green : null,
+                      color: likedByMe ? appColor : null,
                       icon: const Icon(Icons.thumb_up_sharp),
                       onPressed: () {
                         setState(() {
@@ -102,7 +103,7 @@ class _PostCardState extends State<PostCard> {
                     Text(likes.toString(),
                         style: TextStyle(
                           color: likedByMe
-                              ? Colors.green
+                              ? appColor
                               : IconTheme.of(context).color,
                         )),
                   ],

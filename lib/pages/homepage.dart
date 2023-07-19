@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:greenie/assets/globals.dart';
 import 'package:greenie/assets/user.dart';
 import 'package:greenie/pages/feedpage.dart';
+import 'package:greenie/pages/newpostscreen.dart';
 import 'package:greenie/pages/userpage.dart';
 
 class HomePage extends StatefulWidget {
@@ -28,13 +29,6 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       extendBody: true,
       body: pages[navbarIndex],
-      floatingActionButton: navbarIndex == 0
-          ? FloatingActionButton(
-              onPressed: () {},
-              tooltip: 'Yeni paylaşım',
-              child: const Icon(Icons.add),
-            )
-          : null,
       bottomNavigationBar: NavigationBar(
         selectedIndex: navbarIndex,
         destinations: [
@@ -63,6 +57,21 @@ class _HomePageState extends State<HomePage> {
           });
         },
       ),
+      floatingActionButton: [
+        FloatingActionButton(
+          onPressed: () {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (_) => const NewPostScreen(),
+              ),
+            );
+          },
+          tooltip: 'Yeni paylaşım',
+          child: const Icon(Icons.add),
+        ),
+        null,
+        null,
+      ][navbarIndex],
     );
   }
 }
