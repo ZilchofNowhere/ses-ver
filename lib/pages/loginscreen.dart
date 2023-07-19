@@ -238,7 +238,6 @@ class _LoginScreenState extends State<LoginScreen> {
                             for (var _ in [1, 2, 3, 4, 5]) {
                               exUser.addPost(exPost);
                             }
-                            print(exUser.posts);
                             curUser = exUser;
                             Navigator.of(context).pushReplacement(
                               MaterialPageRoute(
