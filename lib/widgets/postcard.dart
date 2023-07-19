@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:greenie/assets/post.dart';
+import 'package:greenie/pages/userpage.dart';
+import 'package:share_plus/share_plus.dart';
 
 class PostCard extends StatefulWidget {
   final Post post;
@@ -32,18 +34,27 @@ class _PostCardState extends State<PostCard> {
       child: Column(
         children: [
           InkWell(
-            onTap: () {}, // navigate to the user page
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => UserPage(user: widget.post.author),
+                ),
+              );
+            }, // navigate to the user page
             borderRadius:
                 const BorderRadius.vertical(top: Radius.circular(12.0)),
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Row(
                 children: [
-                  CircleAvatar(
-                    backgroundImage: AssetImage(
-                      widget.post.author.profilePicPath!,
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                    child: CircleAvatar(
+                      backgroundImage: AssetImage(
+                        widget.post.author.profilePicPath!,
+                      ),
+                      radius: 12,
                     ),
-                    radius: 12,
                   ),
                   const SizedBox(width: 8.0),
                   Text(widget.post.author.username()),
@@ -86,7 +97,7 @@ class _PostCardState extends State<PostCard> {
                           }
                         });
                       },
-                      tooltip: "J'aime",
+                      tooltip: "Beğen",
                     ),
                     Text(likes.toString(),
                         style: TextStyle(
@@ -101,15 +112,19 @@ class _PostCardState extends State<PostCard> {
                     IconButton(
                       icon: const Icon(Icons.comment),
                       onPressed: () {},
-                      tooltip: "Commentaires",
+                      tooltip: "Yorumlar",
                     ),
                     Text(comments.length.toString()),
                   ],
                 ),
                 IconButton(
                   icon: const Icon(Icons.share),
-                  onPressed: () {},
-                  tooltip: "Partager",
+                  onPressed: () {
+                    Share.share(
+                      "${widget.post.author.username()} paylaştı: ${widget.post.content}",
+                    );
+                  },
+                  tooltip: "Paylaş",
                 ),
               ],
             ),

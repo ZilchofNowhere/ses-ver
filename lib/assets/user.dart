@@ -16,4 +16,8 @@ class User {
   String username() {
     return "@$name";
   }
+
+  void addPost(Post post) {
+    posts.add(post);
+  }
 }

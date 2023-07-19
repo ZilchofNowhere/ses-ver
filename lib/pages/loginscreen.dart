@@ -17,6 +17,16 @@ class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _pwdController = TextEditingController();
+  bool rememberMe = false;
+
+  Future<void> initRememberMe() async {
+    bool r = await storage.read(key: "rememberMe") == "true";
+    setState(
+      () {
+        rememberMe = r;
+      },
+    );
+  }
 
   Future<void> loginUser(BuildContext context) async {
     const String loginUrl = "/login";
@@ -36,16 +46,31 @@ class _LoginScreenState extends State<LoginScreen> {
 
     if (context.mounted) {
       if (response.statusCode == 200) {
-        var decodedData = jsonDecode(response.body);
+        var decodedData = decryptJWT(response.body);
+        if (rememberMe) {
+          storage.write(
+            key: "savedUserName",
+            value: decodedData["username"] as String,
+          );
+          storage.write(
+            key: "savedEmail",
+            value: decodedData["email"] as String,
+          );
+          storage.write(
+            key: "savedPFP",
+            value: decodedData["pfp"] as String,
+          );
+        }
         // navigation to home
+        curUser = User(
+          email: decodedData["email"] as String,
+          name: decodedData["username"] as String,
+          profilePicPath: decodedData["pfp"] as String,
+        );
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(
             builder: (_) => HomePage(
-              user: User(
-                name: decodedData["username"],
-                email: decodedData["email"],
-                profilePicPath: decodedData["pfp"],
-              ),
+              user: curUser,
             ),
           ),
         );
@@ -64,6 +89,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    initRememberMe();
+
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -126,8 +153,25 @@ class _LoginScreenState extends State<LoginScreen> {
                       return null;
                     },
                   ),
+                  CheckboxListTile(
+                    title: const Text(
+                      "Beni hatırla",
+                      style: TextStyle(),
+                    ),
+                    contentPadding: const EdgeInsets.all(2),
+                    value: rememberMe,
+                    onChanged: (bool? val) {
+                      setState(() {
+                        rememberMe = val!;
+                      });
+                      storage.write(
+                        key: "rememberMe",
+                        value: rememberMe.toString(),
+                      );
+                    },
+                  ),
                   const SizedBox(
-                    height: 25,
+                    height: 15,
                   ),
                   Row(
                     children: [
@@ -178,6 +222,31 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                           onPressed: () {},
                           child: const Text("Şifremi unuttum"),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: TextButton(
+                          style: ButtonStyle(
+                            foregroundColor: MaterialStateColor.resolveWith(
+                                (states) => Colors.yellow),
+                          ),
+                          onPressed: () {
+                            for (var _ in [1, 2, 3, 4, 5]) {
+                              exUser.addPost(exPost);
+                            }
+                            print(exUser.posts);
+                            curUser = exUser;
+                            Navigator.of(context).pushReplacement(
+                              MaterialPageRoute(
+                                builder: (_) => HomePage(user: curUser),
+                              ),
+                            );
+                          },
+                          child: const Text("Debug"),
                         ),
                       ),
                     ],
