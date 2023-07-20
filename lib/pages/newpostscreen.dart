@@ -1,4 +1,7 @@
+import 'dart:convert';
+import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:greenie/assets/globals.dart';
 import 'package:greenie/assets/post.dart';
@@ -13,13 +16,46 @@ class NewPostScreen extends StatefulWidget {
 
 class _NewPostScreenState extends State<NewPostScreen> {
   final ImagePicker picker = ImagePicker();
-  XFile? image;
+  String? image;
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _textController = TextEditingController();
 
-  Future<String> pickImage() async {
-    image = await picker.pickImage(source: ImageSource.gallery);
-    return image!.path;
+  Future pickImage() async {
+    XFile? image = await picker.pickImage(source: ImageSource.gallery);
+    String? imgPath;
+    if (image != null) {
+      imgPath = await uploadImage(File(image.path));
+    }
+    this.image = imgPath;
+  }
+
+  Future<String?> uploadImage(File img) async {
+    List<int> bytes = await img.readAsBytes();
+    String b64Encoded = base64Encode(bytes);
+
+    final request = http.MultipartRequest(
+      "POST",
+      Uri.parse("/upload"),
+    );
+    request.fields["image"] = b64Encoded;
+
+    final response = await request.send();
+    if (context.mounted) {
+      if (response.statusCode == 200) {
+        var decodedData = await response.stream.bytesToString();
+        return decryptJWT(
+            decodedData)["image"]; // path of the image in the backend
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text("Resminizi yüklerken bir hata meydana geldi."),
+          ),
+        );
+        return null;
+      }
+    } else {
+      return null;
+    }
   }
 
   @override
@@ -80,10 +116,6 @@ class _NewPostScreenState extends State<NewPostScreen> {
                         child: TextButton(
                           onPressed: () {
                             pickImage();
-                            // get the image path (you cant use .then())
-                            // and upload the image to the server
-                            // (i think i could unite the two in one func)
-                            // and finally assign it to the resulting post
                           },
                           child: const Text("Paylaşımınıza bir resim ekleyin"),
                         ),
@@ -100,7 +132,7 @@ class _NewPostScreenState extends State<NewPostScreen> {
                                 id: 1,
                                 author: curUser,
                                 content: _textController.text.trim(),
-                                // image:
+                                image: image,
                               );
                               curUser.addPost(post);
                               Navigator.of(context).pop();
