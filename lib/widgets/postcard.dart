@@ -51,7 +51,7 @@ class _PostCardState extends State<PostCard> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 4.0),
                     child: CircleAvatar(
-                      backgroundImage: AssetImage(
+                      backgroundImage: NetworkImage(
                         widget.post.author.profilePicPath!,
                       ),
                       radius: 12,
@@ -68,7 +68,7 @@ class _PostCardState extends State<PostCard> {
                   height: 0,
                   width: 0,
                 )
-              : Image.asset(
+              : Image.network(
                   widget.post.image!,
                 ),
           Padding(

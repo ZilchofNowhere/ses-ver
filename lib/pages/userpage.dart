@@ -39,7 +39,7 @@ class UserPage extends StatelessWidget {
                   ),
                 ),
                 clipBehavior: Clip.hardEdge,
-                child: Image.asset(
+                child: Image.network(
                   user.profilePicPath!,
                 ),
               ),

@@ -10,7 +10,7 @@ import 'package:greenie/assets/user.dart';
 User exUser = User(
   name: "ekocan",
   email: "example@example.com",
-  profilePicPath: "assets/images/pfp.png",
+  profilePicPath: "https://zilchofnowhere.github.io/webdesign/ihsan.jpeg",
 );
 
 Post exPost = Post(
@@ -18,21 +18,21 @@ Post exPost = Post(
   author: exUser,
   content:
       "Ben doğada çok eğleniyorum, siz de orada zaman geçirmek istemez misiniz?",
-  image: "assets/images/toprow.png",
+  image: "https://zilchofnowhere.github.io/webdesign/ihsan.jpeg",
 );
 
 //TODO: bring the events class here
 const items = [
   [
-    "assets/images/toprow.png",
+    "https://zilchofnowhere.github.io/webdesign/ihsan.jpeg",
     "Fatih'teki çiçek bahçelerini temizliyoruz",
   ],
   [
-    "assets/images/toprow.png",
+    "https://zilchofnowhere.github.io/webdesign/ihsan.jpeg",
     "Mobil bir uygulama geliştiriyoruz",
   ],
   [
-    "assets/images/toprow.png",
+    "https://zilchofnowhere.github.io/webdesign/ihsan.jpeg",
     "Patreon üzerinden çalışmamıza destek verin",
   ]
 ];

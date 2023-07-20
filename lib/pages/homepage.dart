@@ -44,7 +44,7 @@ class _HomePageState extends State<HomePage> {
           ),
           NavigationDestination(
             icon: CircleAvatar(
-              backgroundImage: AssetImage(widget.user.profilePicPath!),
+              backgroundImage: NetworkImage(widget.user.profilePicPath!),
               radius: 12,
             ),
             label: "Hesabınız",

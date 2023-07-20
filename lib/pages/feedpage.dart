@@ -63,7 +63,9 @@ class FeedPage extends StatelessWidget {
                     author: exUser,
                     content:
                         "Ben doğada çok eğleniyorum, siz de orada zaman geçirmek istemez misiniz?",
-                    image: e % 2 == 1 ? null : "assets/images/toprow.png",
+                    image: e % 2 == 1
+                        ? null
+                        : "https://zilchofnowhere.github.io/webdesign/ihsan.jpeg",
                   ),
                 ),
               ),
