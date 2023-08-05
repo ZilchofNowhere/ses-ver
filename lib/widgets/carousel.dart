@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:greenie/assets/events.dart';
 
 class Carousel extends StatefulWidget {
-  final List<List<String>> items;
+  final List<Event> items;
   const Carousel({super.key, required this.items});
 
   @override
@@ -41,28 +42,17 @@ class _CarouselState extends State<Carousel> {
         },
         itemBuilder: (context, index) {
           return CarouselCard(
-            image: widget.items[index % widget.items.length][0],
-            description: widget.items[index % widget.items.length][1],
+            event: widget.items[index % widget.items.length],
           );
         },
-        // children: [
-        //   ...(widget.items.map(
-        //     (e) => CarouselCard(
-        //       image: e.first,
-        //       description: e[1],
-        //     ),
-        //   )),
-        // ],
       ),
     );
   }
 }
 
 class CarouselCard extends StatelessWidget {
-  final String image;
-  final String description;
-  const CarouselCard(
-      {super.key, required this.image, required this.description});
+  final Event event;
+  const CarouselCard({super.key, required this.event});
 
   @override
   Widget build(BuildContext context) {
@@ -75,13 +65,13 @@ class CarouselCard extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Image.network(
-              image,
+              event.imagePath,
               height: 200,
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8.0),
               child: Text(
-                description,
+                event.content,
                 maxLines: 3,
                 textAlign: TextAlign.center,
                 overflow: TextOverflow.ellipsis,

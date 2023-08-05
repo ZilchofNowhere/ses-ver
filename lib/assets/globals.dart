@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:greenie/assets/post.dart';
 import 'package:greenie/assets/user.dart';
+import 'package:greenie/assets/events.dart';
+import 'package:location/location.dart';
 
 // example structures
 User exUser = User(
@@ -21,21 +23,27 @@ Post exPost = Post(
   image: "https://zilchofnowhere.github.io/webdesign/ihsan.jpeg",
 );
 
-//TODO: bring the events class here
-const items = [
-  [
-    "https://zilchofnowhere.github.io/webdesign/ihsan.jpeg",
-    "Fatih'teki çiçek bahçelerini temizliyoruz",
-  ],
-  [
-    "https://zilchofnowhere.github.io/webdesign/ihsan.jpeg",
-    "Mobil bir uygulama geliştiriyoruz",
-  ],
-  [
-    "https://zilchofnowhere.github.io/webdesign/ihsan.jpeg",
-    "Patreon üzerinden çalışmamıza destek verin",
-  ]
+final items = [
+  Event(
+    author: exUser,
+    imagePath: "https://zilchofnowhere.github.io/webdesign/ihsan.jpeg",
+    content: "Fatih'teki çiçek bahçelerini temizliyoruz",
+    location: Coordinates(41.012194, 28.979666),
+  ),
+  Event(
+    author: exUser,
+    imagePath: "https://zilchofnowhere.github.io/webdesign/ihsan.jpeg",
+    content: "Mobil bir uygulama geliştiriyoruz",
+    location: Coordinates(38.616324, 27.398153),
+  ),
+  Event(
+    author: exUser,
+    imagePath: "https://zilchofnowhere.github.io/webdesign/ihsan.jpeg",
+    content: "Patreon üzerinden çalışmamıza destek verin",
+    location: Coordinates(36.787902, 31.430933),
+  )
 ];
+
 // tools
 Map<String, dynamic> decryptJWT(String jwt) {
   return jsonDecode(
@@ -49,6 +57,15 @@ Map<String, dynamic> decryptJWT(String jwt) {
   );
 }
 
+class Coordinates {
+  final double latitude;
+  final double longitude;
+  Coordinates(this.latitude, this.longitude);
+  Coordinates.fromLData(LocationData locationData)
+      : latitude = locationData.latitude!,
+        longitude = locationData.longitude!;
+}
+
 // globals
 const appTitle = "Ses Ver";
 const appColor = Color.fromRGBO(12, 170, 8, 1);
@@ -58,3 +75,5 @@ const storage = FlutterSecureStorage(
     encryptedSharedPreferences: true,
   ),
 );
+final Location location = Location();
+late bool locationGranted;

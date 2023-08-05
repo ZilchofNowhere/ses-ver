@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:greenie/assets/user.dart';
 import 'package:greenie/pages/homepage.dart';
 import 'package:greenie/assets/globals.dart';
+import 'package:location/location.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -18,6 +19,29 @@ class _LoginScreenState extends State<LoginScreen> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _pwdController = TextEditingController();
   bool rememberMe = false;
+
+  Future<bool> enableLocationService() async {
+    bool servEnabled;
+    PermissionStatus granted;
+
+    servEnabled = await location.serviceEnabled();
+    if (!servEnabled) {
+      servEnabled = await location.requestService();
+      if (!servEnabled) {
+        return false;
+      }
+    }
+
+    granted = await location.hasPermission();
+    if (granted == PermissionStatus.denied) {
+      granted = await location.requestPermission();
+      if (granted == PermissionStatus.denied) {
+        return false;
+      }
+    }
+
+    return true;
+  }
 
   Future<void> initRememberMe() async {
     bool r = await storage.read(key: "rememberMe") == "true";
@@ -74,6 +98,7 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
           ),
         );
+        locationGranted = await enableLocationService();
       } else {
         // login failed
         ScaffoldMessenger.of(context).showSnackBar(

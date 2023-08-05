@@ -19,7 +19,7 @@ class SettingsPage extends StatelessWidget {
         forceMaterialTransparency: true,
       ),
       body: ListView(
-        children: [],
+        children: const [],
       ),
     );
   }

@@ -47,5 +47,7 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>Uygulamanın düzgün çalışması için konumunza erişmemiz gerekiyor.</string>
 </dict>
 </plist>
