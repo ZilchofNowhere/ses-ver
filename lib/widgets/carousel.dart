@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:greenie/assets/events.dart';
+import 'package:greenie/pages/eventpage.dart';
 
 class Carousel extends StatefulWidget {
   final List<Event> items;
@@ -60,7 +61,11 @@ class CarouselCard extends StatelessWidget {
       elevation: 5,
       child: InkWell(
         borderRadius: BorderRadius.circular(10),
-        onTap: () {},
+        onTap: () {
+          Navigator.of(context).push(
+            MaterialPageRoute(builder: (_) => EventPage(event: event)),
+          );
+        },
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [

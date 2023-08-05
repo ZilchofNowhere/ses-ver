@@ -1,11 +1,11 @@
-import 'package:greenie/assets/globals.dart';
 import 'package:greenie/assets/user.dart';
+import 'package:latlong2/latlong.dart';
 
 class Event {
   final User author;
   final String content;
   final String imagePath;
-  final Coordinates location;
+  final LatLng location;
 
   Event({
     required this.author,

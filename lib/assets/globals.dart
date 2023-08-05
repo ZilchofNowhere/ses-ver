@@ -6,6 +6,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:greenie/assets/post.dart';
 import 'package:greenie/assets/user.dart';
 import 'package:greenie/assets/events.dart';
+import 'package:latlong2/latlong.dart';
 import 'package:location/location.dart';
 
 // example structures
@@ -28,19 +29,19 @@ final List<Event> items = [
     author: exUser,
     imagePath: "https://zilchofnowhere.github.io/webdesign/ihsan.jpeg",
     content: "Fatih'teki çiçek bahçelerini temizliyoruz",
-    location: Coordinates(41.012194, 28.979666),
+    location: const LatLng(41.012194, 28.979666),
   ),
   Event(
     author: exUser,
     imagePath: "https://zilchofnowhere.github.io/webdesign/ihsan.jpeg",
     content: "Mobil bir uygulama geliştiriyoruz",
-    location: Coordinates(38.616324, 27.398153),
+    location: const LatLng(38.616324, 27.398153),
   ),
   Event(
     author: exUser,
     imagePath: "https://zilchofnowhere.github.io/webdesign/ihsan.jpeg",
     content: "Patreon üzerinden çalışmamıza destek verin",
-    location: Coordinates(36.787902, 31.430933),
+    location: const LatLng(36.787902, 31.430933),
   )
 ];
 
@@ -55,15 +56,6 @@ Map<String, dynamic> decryptJWT(String jwt) {
       ),
     ),
   );
-}
-
-class Coordinates {
-  final double latitude;
-  final double longitude;
-  Coordinates(this.latitude, this.longitude);
-  Coordinates.fromLData(LocationData locationData)
-      : latitude = locationData.latitude!,
-        longitude = locationData.longitude!;
 }
 
 // globals
