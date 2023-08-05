@@ -43,7 +43,7 @@ class FeedPage extends StatelessWidget {
                 ),
               ),
             ),
-            const Carousel(items: items),
+            Carousel(items: items),
             const Padding(
               padding: EdgeInsets.fromLTRB(25.0, 15.0, 0.0, 8.0),
               child: Text(

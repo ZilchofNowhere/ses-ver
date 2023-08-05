@@ -23,7 +23,7 @@ Post exPost = Post(
   image: "https://zilchofnowhere.github.io/webdesign/ihsan.jpeg",
 );
 
-final items = [
+final List<Event> items = [
   Event(
     author: exUser,
     imagePath: "https://zilchofnowhere.github.io/webdesign/ihsan.jpeg",

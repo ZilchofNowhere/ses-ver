@@ -112,6 +112,20 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
+  Future<void> exLogin() async {
+    for (var _ in [1, 2, 3, 4, 5]) {
+      exUser.addPost(exPost);
+    }
+    curUser = exUser;
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(
+        builder: (_) => HomePage(user: curUser),
+      ),
+    );
+
+    locationGranted = await enableLocationService();
+  }
+
   @override
   Widget build(BuildContext context) {
     initRememberMe();
@@ -259,17 +273,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             foregroundColor: MaterialStateColor.resolveWith(
                                 (states) => Colors.yellow),
                           ),
-                          onPressed: () {
-                            for (var _ in [1, 2, 3, 4, 5]) {
-                              exUser.addPost(exPost);
-                            }
-                            curUser = exUser;
-                            Navigator.of(context).pushReplacement(
-                              MaterialPageRoute(
-                                builder: (_) => HomePage(user: curUser),
-                              ),
-                            );
-                          },
+                          onPressed: () => exLogin(),
                           child: const Text("Debug"),
                         ),
                       ),
