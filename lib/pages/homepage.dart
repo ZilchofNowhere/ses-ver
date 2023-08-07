@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:greenie/assets/fab.dart';
 import 'package:greenie/assets/globals.dart';
 import 'package:greenie/assets/user.dart';
 import 'package:greenie/pages/feedpage.dart';
+import 'package:greenie/pages/neweventscreen.dart';
 import 'package:greenie/pages/newpostscreen.dart';
 import 'package:greenie/pages/userpage.dart';
 
@@ -58,17 +60,44 @@ class _HomePageState extends State<HomePage> {
         },
       ),
       floatingActionButton: [
-        FloatingActionButton(
-          onPressed: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (_) => const NewPostScreen(),
-              ),
-            );
-          },
-          tooltip: 'Yeni paylaşım',
-          child: const Icon(Icons.add),
+        ExpandableFab(
+          distance: 75,
+          children: [
+            ActionButton(
+              icon: const Icon(Icons.post_add),
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (_) => const NewPostScreen(),
+                  ),
+                );
+              },
+              tooltip: "Yeni paylaşım",
+            ),
+            ActionButton(
+              icon: const Icon(Icons.event),
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (_) => const NewEventScreen(),
+                  ),
+                );
+              },
+              tooltip: "Yeni etkinlik",
+            ),
+          ],
         ),
+        // FloatingActionButton(
+        //   onPressed: () {
+        //     Navigator.of(context).push(
+        //       MaterialPageRoute(
+        //         builder: (_) => const NewPostScreen(),
+        //       ),
+        //     );
+        //   },
+        //   tooltip: 'Yeni paylaşım',
+        //   child: const Icon(Icons.add),
+        // ),
         null,
         null,
       ][navbarIndex],
