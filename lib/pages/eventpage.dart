@@ -39,7 +39,7 @@ class _EventPageState extends State<EventPage> {
                 width: double.infinity,
               ),
               Image.network(
-                widget.event.imagePath,
+                widget.event.image,
               ),
               const SizedBox(
                 height: 10,

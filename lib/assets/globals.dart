@@ -27,19 +27,19 @@ Post exPost = Post(
 final List<Event> items = [
   Event(
     author: exUser,
-    imagePath: "https://zilchofnowhere.github.io/webdesign/ihsan.jpeg",
+    image: "https://zilchofnowhere.github.io/webdesign/ihsan.jpeg",
     content: "Fatih'teki çiçek bahçelerini temizliyoruz",
     location: const LatLng(41.012194, 28.979666),
   ),
   Event(
     author: exUser,
-    imagePath: "https://zilchofnowhere.github.io/webdesign/ihsan.jpeg",
+    image: "https://zilchofnowhere.github.io/webdesign/ihsan.jpeg",
     content: "Mobil bir uygulama geliştiriyoruz",
     location: const LatLng(38.616324, 27.398153),
   ),
   Event(
     author: exUser,
-    imagePath: "https://zilchofnowhere.github.io/webdesign/ihsan.jpeg",
+    image: "https://zilchofnowhere.github.io/webdesign/ihsan.jpeg",
     content: "Patreon üzerinden çalışmamıza destek verin",
     location: const LatLng(36.787902, 31.430933),
   )

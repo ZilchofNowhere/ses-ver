@@ -70,7 +70,7 @@ class CarouselCard extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Image.network(
-              event.imagePath,
+              event.image,
               height: 200,
             ),
             Padding(

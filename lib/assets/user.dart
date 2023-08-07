@@ -1,3 +1,4 @@
+import 'package:greenie/assets/events.dart';
 import 'package:greenie/assets/post.dart';
 
 class User {
@@ -5,6 +6,7 @@ class User {
   final String email;
   String? profilePicPath = "assets/images/defaultpfp.png";
   List<Post> posts = [];
+  List<Event> events = [];
   List<Post> likedPosts = [];
 
   User({
@@ -19,5 +21,9 @@ class User {
 
   void addPost(Post post) {
     posts.add(post);
+  }
+
+  void addEvent(Event event) {
+    events.add(event);
   }
 }

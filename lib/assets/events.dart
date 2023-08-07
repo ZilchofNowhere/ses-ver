@@ -4,13 +4,13 @@ import 'package:latlong2/latlong.dart';
 class Event {
   final User author;
   final String content;
-  final String imagePath;
+  final String image;
   final LatLng location;
 
   Event({
     required this.author,
     required this.content,
-    required this.imagePath,
+    required this.image,
     required this.location,
   });
 }
