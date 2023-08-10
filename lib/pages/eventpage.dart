@@ -3,6 +3,7 @@ import 'package:greenie/assets/events.dart';
 import 'package:greenie/assets/globals.dart';
 import 'package:greenie/widgets/popupmenu.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:map_launcher/map_launcher.dart';
 
 class EventPage extends StatefulWidget {
   final Event event;
@@ -13,8 +14,26 @@ class EventPage extends StatefulWidget {
 }
 
 class _EventPageState extends State<EventPage> {
+  late List<AvailableMap> availableMaps;
+  Future<void> getInstalledMaps() async {
+    final availableMaps = await MapLauncher.installedMaps;
+    this.availableMaps = availableMaps;
+  }
+
+  Future<void> goToAddress() async {
+    await availableMaps.first.showMarker(
+      coords: Coords(
+        widget.event.location.latitude,
+        widget.event.location.longitude,
+      ),
+      title: "Etkinliğin adresi",
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    getInstalledMaps();
+
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -66,7 +85,7 @@ class _EventPageState extends State<EventPage> {
                 height: 10,
               ),
               ConstrainedBox(
-                constraints: BoxConstraints.loose(const Size(500, 500)),
+                constraints: BoxConstraints.loose(const Size(300, 300)),
                 child: FlutterMap(
                   options: MapOptions(
                     center: widget.event.location,
@@ -93,6 +112,21 @@ class _EventPageState extends State<EventPage> {
                     ),
                   ],
                 ),
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              Row(
+                children: [
+                  Expanded(
+                    child: TextButton(
+                      onPressed: () {
+                        goToAddress();
+                      },
+                      child: const Text("Adrese git"),
+                    ),
+                  ),
+                ],
               ),
               const SizedBox(
                 height: 75,

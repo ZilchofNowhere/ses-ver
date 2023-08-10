@@ -6,6 +6,7 @@ class Event {
   final String content;
   final String image;
   final LatLng location;
+  int followers = 0;
 
   Event({
     required this.author,
