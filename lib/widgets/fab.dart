@@ -199,7 +199,7 @@ class ActionButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Material(
-      shape: const CircleBorder(),
+      borderRadius: BorderRadius.circular(16),
       clipBehavior: Clip.antiAlias,
       color: theme.colorScheme.secondary,
       elevation: 4,

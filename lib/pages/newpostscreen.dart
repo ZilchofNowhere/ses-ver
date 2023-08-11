@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:greenie/widgets/widebutton.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:greenie/assets/globals.dart';
@@ -110,38 +111,28 @@ class _NewPostScreenState extends State<NewPostScreen> {
                   const SizedBox(
                     height: 20.0,
                   ),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: TextButton(
-                          onPressed: () {
-                            pickImage();
-                          },
-                          child: const Text("Paylaşımınıza bir resim ekleyin"),
-                        ),
-                      ),
-                    ],
+                  WideButton(
+                    elevated: false,
+                    onPressed: () {
+                      pickImage();
+                    },
+                    child: const Text("Paylaşımınıza bir resim ekleyin"),
                   ),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: ElevatedButton(
-                          onPressed: () {
-                            if (_formKey.currentState!.validate()) {
-                              Post post = Post(
-                                id: 1,
-                                author: curUser,
-                                content: _textController.text.trim(),
-                                image: image,
-                              );
-                              curUser.addPost(post);
-                              Navigator.of(context).pop();
-                            }
-                          },
-                          child: const Text("Paylaşın!"),
-                        ),
-                      ),
-                    ],
+                  WideButton(
+                    elevated: true,
+                    onPressed: () {
+                      if (_formKey.currentState!.validate()) {
+                        Post post = Post(
+                          id: 1,
+                          author: curUser,
+                          content: _textController.text.trim(),
+                          image: image,
+                        );
+                        curUser.addPost(post);
+                        Navigator.of(context).pop();
+                      }
+                    },
+                    child: const Text("Paylaşın!"),
                   ),
                 ],
               ),

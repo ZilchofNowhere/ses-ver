@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:greenie/assets/fab.dart';
+import 'package:greenie/widgets/fab.dart';
 import 'package:greenie/assets/globals.dart';
 import 'package:greenie/assets/user.dart';
 import 'package:greenie/pages/feedpage.dart';
@@ -64,7 +64,9 @@ class _HomePageState extends State<HomePage> {
           distance: 75,
           children: [
             ActionButton(
-              icon: const Icon(Icons.post_add),
+              icon: const Icon(
+                Icons.post_add,
+              ),
               onPressed: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(
@@ -87,17 +89,6 @@ class _HomePageState extends State<HomePage> {
             ),
           ],
         ),
-        // FloatingActionButton(
-        //   onPressed: () {
-        //     Navigator.of(context).push(
-        //       MaterialPageRoute(
-        //         builder: (_) => const NewPostScreen(),
-        //       ),
-        //     );
-        //   },
-        //   tooltip: 'Yeni paylaşım',
-        //   child: const Icon(Icons.add),
-        // ),
         null,
         null,
       ][navbarIndex],

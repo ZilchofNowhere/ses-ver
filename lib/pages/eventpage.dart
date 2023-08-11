@@ -3,6 +3,7 @@ import 'package:greenie/assets/events.dart';
 import 'package:greenie/assets/globals.dart';
 import 'package:greenie/widgets/popupmenu.dart';
 import 'package:flutter_map/flutter_map.dart';
+import 'package:greenie/widgets/widebutton.dart';
 import 'package:map_launcher/map_launcher.dart';
 
 class EventPage extends StatefulWidget {
@@ -15,6 +16,8 @@ class EventPage extends StatefulWidget {
 
 class _EventPageState extends State<EventPage> {
   late List<AvailableMap> availableMaps;
+  bool isFollowed = false;
+
   Future<void> getInstalledMaps() async {
     final availableMaps = await MapLauncher.installedMaps;
     this.availableMaps = availableMaps;
@@ -54,14 +57,12 @@ class _EventPageState extends State<EventPage> {
           padding: const EdgeInsets.all(15.0),
           child: Column(
             children: [
-              const SizedBox(
-                width: double.infinity,
-              ),
               Image.network(
                 widget.event.image,
               ),
               const SizedBox(
                 height: 10,
+                width: double.infinity,
               ),
               Text(
                 widget.event.content,
@@ -116,17 +117,55 @@ class _EventPageState extends State<EventPage> {
               const SizedBox(
                 height: 15,
               ),
-              Row(
-                children: [
-                  Expanded(
-                    child: TextButton(
-                      onPressed: () {
-                        goToAddress();
-                      },
-                      child: const Text("Adrese git"),
-                    ),
-                  ),
-                ],
+              WideButton(
+                elevated: false,
+                onPressed: () {
+                  goToAddress();
+                },
+                child: const Text("Adrese git"),
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              WideButton(
+                elevated: true,
+                onPressed: () {
+                  setState(() {
+                    isFollowed = !isFollowed;
+                  });
+                },
+                style: isFollowed
+                    ? ButtonStyle(
+                        backgroundColor: MaterialStateColor.resolveWith(
+                          (states) =>
+                              Theme.of(context).buttonTheme.colorScheme!.error,
+                        ),
+                        foregroundColor: MaterialStateColor.resolveWith(
+                          (states) => Theme.of(context)
+                              .buttonTheme
+                              .colorScheme!
+                              .onError,
+                        ),
+                        overlayColor: MaterialStateColor.resolveWith(
+                          (states) =>
+                              Theme.of(context).buttonTheme.colorScheme!.error,
+                        ),
+                      )
+                    : null,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: isFollowed
+                      ? [
+                          const Icon(Icons.output),
+                          const SizedBox(width: 10),
+                          const Text("Etkinlikten çıkın"),
+                        ]
+                      : [
+                          const Icon(Icons.input),
+                          const SizedBox(width: 10),
+                          const Text("Etkinliğe katılın"),
+                        ],
+                ),
               ),
               const SizedBox(
                 height: 75,

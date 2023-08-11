@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:greenie/widgets/widebutton.dart';
 import 'package:http/http.dart' as http;
 import 'package:validators/validators.dart';
 import 'package:greenie/assets/globals.dart';
@@ -172,27 +173,22 @@ class _SignupScreenState extends State<SignupScreen> {
                   const SizedBox(
                     height: 25,
                   ),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: ElevatedButton(
-                          onPressed: () {
-                            if (_formKey.currentState!.validate()) {
-                              signupUser(context);
-                            } else {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text(
-                                    "Lütfen yukarıdaki alanları eksiksiz doldurun.",
-                                  ),
-                                ),
-                              );
-                            }
-                          },
-                          child: const Text("Hesabınızı oluşturun"),
-                        ),
-                      ),
-                    ],
+                  WideButton(
+                    elevated: true,
+                    onPressed: () {
+                      if (_formKey.currentState!.validate()) {
+                        signupUser(context);
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text(
+                              "Lütfen yukarıdaki alanları eksiksiz doldurun.",
+                            ),
+                          ),
+                        );
+                      }
+                    },
+                    child: const Text("Hesabınızı oluşturun"),
                   ),
                 ],
               ),

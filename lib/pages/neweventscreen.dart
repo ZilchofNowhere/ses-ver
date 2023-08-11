@@ -6,6 +6,7 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:greenie/assets/events.dart';
 import 'package:greenie/assets/globals.dart';
 import 'package:greenie/widgets/popupmenu.dart';
+import 'package:greenie/widgets/widebutton.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:latlong2/latlong.dart';
@@ -115,17 +116,12 @@ class _NewEventScreenState extends State<NewEventScreen> {
                   const SizedBox(
                     height: 20.0,
                   ),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: TextButton(
-                          onPressed: () {
-                            pickImage();
-                          },
-                          child: const Text("Etkinliğinize bir resim ekleyin"),
-                        ),
-                      ),
-                    ],
+                  WideButton(
+                    elevated: false,
+                    onPressed: () {
+                      pickImage();
+                    },
+                    child: const Text("Etkinliğinize bir resim ekleyin"),
                   ),
                   const SizedBox(
                     height: 20,
@@ -175,34 +171,27 @@ class _NewEventScreenState extends State<NewEventScreen> {
                   const SizedBox(
                     height: 10,
                   ),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: ElevatedButton(
-                          onPressed: () {
-                            if (_formKey.currentState!.validate() &&
-                                image != null) {
-                              Event post = Event(
-                                author: curUser,
-                                content: _textController.text.trim(),
-                                image: image!,
-                                location: location,
-                              );
-                              curUser.addEvent(post);
-                              Navigator.of(context).pop();
-                            } else if (image == null) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content:
-                                      Text("Etkinliğinizin bir resmi olmalı."),
-                                ),
-                              );
-                            }
-                          },
-                          child: const Text("Paylaşın!"),
-                        ),
-                      ),
-                    ],
+                  WideButton(
+                    elevated: true,
+                    onPressed: () {
+                      if (_formKey.currentState!.validate() && image != null) {
+                        Event post = Event(
+                          author: curUser,
+                          content: _textController.text.trim(),
+                          image: image!,
+                          location: location,
+                        );
+                        curUser.addEvent(post);
+                        Navigator.of(context).pop();
+                      } else if (image == null) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text("Etkinliğinizin bir resmi olmalı."),
+                          ),
+                        );
+                      }
+                    },
+                    child: const Text("Paylaşın!"),
                   ),
                 ],
               ),

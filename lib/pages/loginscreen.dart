@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:greenie/pages/signupscreen.dart';
+import 'package:greenie/widgets/widebutton.dart';
 import 'package:http/http.dart' as http;
 import 'package:greenie/assets/user.dart';
 import 'package:greenie/pages/homepage.dart';
@@ -212,72 +213,51 @@ class _LoginScreenState extends State<LoginScreen> {
                   const SizedBox(
                     height: 15,
                   ),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: ElevatedButton(
-                          onPressed: () {
-                            if (_formKey.currentState!.validate()) {
-                              loginUser(context);
-                            } else {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text(
-                                    "Lütfen yukarıdaki alanları eksiksiz doldurun.",
-                                  ),
-                                ),
-                              );
-                            }
-                          },
-                          child: const Text("Giriş yapın"),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: TextButton(
-                          onPressed: () {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (context) => const SignupScreen(),
-                              ),
-                            );
-                          },
-                          child:
-                              const Text("Hesabınız yok mu? Hesap oluşturun!"),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: TextButton(
-                          style: ButtonStyle(
-                            foregroundColor: MaterialStateColor.resolveWith(
-                                (states) => Colors.red),
+                  WideButton(
+                    elevated: true,
+                    onPressed: () {
+                      if (_formKey.currentState!.validate()) {
+                        loginUser(context);
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text(
+                              "Lütfen yukarıdaki alanları eksiksiz doldurun.",
+                            ),
                           ),
-                          onPressed: () {},
-                          child: const Text("Şifremi unuttum"),
-                        ),
-                      ),
-                    ],
+                        );
+                      }
+                    },
+                    child: const Text("Giriş yapın"),
                   ),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: TextButton(
-                          style: ButtonStyle(
-                            foregroundColor: MaterialStateColor.resolveWith(
-                                (states) => Colors.yellow),
-                          ),
-                          onPressed: () => exLogin(),
-                          child: const Text("Debug"),
+                  WideButton(
+                    elevated: false,
+                    onPressed: () {
+                      Navigator.of(context).push(
+                        MaterialPageRoute(
+                          builder: (context) => const SignupScreen(),
                         ),
-                      ),
-                    ],
+                      );
+                    },
+                    child: const Text("Hesabınız yok mu? Hesap oluşturun!"),
+                  ),
+                  WideButton(
+                    elevated: false,
+                    style: ButtonStyle(
+                      foregroundColor: MaterialStateColor.resolveWith(
+                          (states) => Colors.red),
+                    ),
+                    onPressed: () {},
+                    child: const Text("Şifremi unuttum"),
+                  ),
+                  WideButton(
+                    elevated: false,
+                    style: ButtonStyle(
+                      foregroundColor: MaterialStateColor.resolveWith(
+                          (states) => Colors.yellow),
+                    ),
+                    onPressed: () => exLogin(),
+                    child: const Text("Debug"),
                   ),
                 ],
               ),
