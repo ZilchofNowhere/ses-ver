@@ -35,7 +35,7 @@ class _SignupScreenState extends State<SignupScreen> {
   }
 
   Future<void> signupUser(BuildContext context) async {
-    const String signupUrl = "/signup";
+    const String signupUrl = "$testIp/signup";
 
     final response = await http.post(
       Uri.parse(signupUrl),
@@ -44,7 +44,7 @@ class _SignupScreenState extends State<SignupScreen> {
       },
       body: jsonEncode(
         <String, String>{
-          "username": _nameController.text.trim().toLowerCase(),
+          "name": _nameController.text.trim().toLowerCase(),
           "email": _emailController.text.trim().toLowerCase(),
           "password": _pwdController.text,
         },
@@ -52,7 +52,7 @@ class _SignupScreenState extends State<SignupScreen> {
     );
 
     if (context.mounted) {
-      if (response.statusCode == 200) {
+      if (response.statusCode == 201) {
         Navigator.of(context).pop(); // back to login screen
       } else {
         ScaffoldMessenger.of(context).showSnackBar(

@@ -54,7 +54,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Future<void> loginUser(BuildContext context) async {
-    const String loginUrl = "/login";
+    const String loginUrl = "$testIp/login";
 
     final response = await http.post(
       Uri.parse(loginUrl),
@@ -63,19 +63,19 @@ class _LoginScreenState extends State<LoginScreen> {
       },
       body: jsonEncode(
         <String, String>{
-          "username": _nameController.text.trim(),
+          "name": _nameController.text.trim(),
           "password": _pwdController.text
         },
       ),
     );
 
     if (context.mounted) {
-      if (response.statusCode == 200) {
-        var decodedData = decryptJWT(response.body);
+      if (response.statusCode == 201) {
+        var decodedData = jsonDecode(response.body)["user"];
         if (rememberMe) {
           storage.write(
             key: "savedUserName",
-            value: decodedData["username"] as String,
+            value: decodedData["name"] as String,
           );
           storage.write(
             key: "savedEmail",
@@ -89,8 +89,9 @@ class _LoginScreenState extends State<LoginScreen> {
         // navigation to home
         curUser = User(
           email: decodedData["email"] as String,
-          name: decodedData["username"] as String,
-          profilePicPath: decodedData["pfp"] as String,
+          name: decodedData["name"] as String,
+          profilePicPath: decodedData["pfp"] ??
+              "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/340px-Default_pfp.svg.png",
         );
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(
