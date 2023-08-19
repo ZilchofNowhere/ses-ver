@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:greenie/assets/globals.dart';
 import 'package:greenie/pages/loginscreen.dart';
 import 'package:greenie/pages/settingspage.dart';
 import 'package:http/http.dart' as http;
@@ -25,6 +26,10 @@ class _AppBarPopupMenuState extends State<AppBarPopupMenu> {
       if (response.statusCode == 200) {
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(builder: (_) => const LoginScreen()),
+        );
+        storage.write(
+          key: "rememberMe",
+          value: "false",
         );
       }
     }
