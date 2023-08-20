@@ -72,6 +72,7 @@ class _LoginScreenState extends State<LoginScreen> {
     if (context.mounted) {
       if (response.statusCode == 201) {
         var decodedData = jsonDecode(response.body)["user"];
+        final token = jsonDecode(response.body)["token"] as String;
         if (rememberMe) {
           storage.write(
             key: "savedUserName",
@@ -92,6 +93,7 @@ class _LoginScreenState extends State<LoginScreen> {
           name: decodedData["name"] as String,
           profilePicPath: decodedData["pfp"] ??
               "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/Default_pfp.svg/340px-Default_pfp.svg.png",
+          token: token,
         );
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(

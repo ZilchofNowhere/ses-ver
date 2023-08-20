@@ -5,6 +5,7 @@ class User {
   final String name;
   final String email;
   String? profilePicPath = "assets/images/defaultpfp.png";
+  String? token;
   List<Post> posts = [];
   List<Event> events = [];
   List<Post> likedPosts = [];
@@ -13,6 +14,7 @@ class User {
     required this.name,
     required this.email,
     this.profilePicPath,
+    this.token,
   });
 
   String username() {

@@ -18,44 +18,55 @@ class NewPostScreen extends StatefulWidget {
 class _NewPostScreenState extends State<NewPostScreen> {
   final ImagePicker picker = ImagePicker();
   String? image;
+  File? imageFile;
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _textController = TextEditingController();
 
   Future pickImage() async {
     XFile? image = await picker.pickImage(source: ImageSource.gallery);
-    String? imgPath;
     if (image != null) {
-      imgPath = await uploadImage(File(image.path));
+      imageFile = File(image.path);
+    } else {
+      imageFile = null;
     }
-    this.image = imgPath;
   }
 
-  Future<String?> uploadImage(File img) async {
-    List<int> bytes = await img.readAsBytes();
+  Future uploadPost(String desc) async {
+    List<int> bytes = await imageFile?.readAsBytes() ?? [];
     String b64Encoded = base64Encode(bytes);
 
     final request = http.MultipartRequest(
       "POST",
-      Uri.parse("/upload"),
+      Uri.parse("$testIp/upload"),
     );
-    request.fields["image"] = b64Encoded;
+    request.fields["author"] = curUser.name;
+    request.fields["base64Data"] = b64Encoded;
+    request.fields['postDescription'] = desc;
+    try {
+      request.fields["token"] = curUser.token!;
+    } on Exception catch (_) {
+      if (context.mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text("Hesabınız doğrulanamadı.")));
+      }
+      return;
+    }
 
     final response = await request.send();
     if (context.mounted) {
       if (response.statusCode == 200) {
-        var decodedData = await response.stream.bytesToString();
-        return decryptJWT(
-            decodedData)["image"]; // path of the image in the backend
+        var jsonStr = await response.stream.bytesToString();
+        var decodedData = jsonDecode(jsonStr)["user"] as Map<String, String>;
+        // path of the image in the backend
+        image = decodedData["image"];
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text("Resminizi yüklerken bir hata meydana geldi."),
+          SnackBar(
+            content: Text(
+                "Resminizi yüklerken bir hata meydana geldi. (Hata kodu ${response.statusCode})"),
           ),
         );
-        return null;
       }
-    } else {
-      return null;
     }
   }
 
@@ -122,6 +133,7 @@ class _NewPostScreenState extends State<NewPostScreen> {
                     elevated: true,
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
+                        uploadPost(_textController.text.trim());
                         Post post = Post(
                           id: 1,
                           author: curUser,
