@@ -28,4 +28,6 @@ class User {
   void addEvent(Event event) {
     events.add(event);
   }
+
+  Future reportUser() async {}
 }
