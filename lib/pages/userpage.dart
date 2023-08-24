@@ -20,8 +20,8 @@ class UserPage extends StatelessWidget {
             fontFamily: "Gabriela",
           ),
         ),
-        actions: const [
-          AppBarPopupMenu(),
+        actions: [
+          UserPagePopupMenu(user),
         ],
         centerTitle: true,
         forceMaterialTransparency: true,
