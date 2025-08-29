@@ -59,6 +59,8 @@ class _NewPostScreenState extends State<NewPostScreen> {
         var decodedData = jsonDecode(jsonStr)["user"] as Map<String, String>;
         // path of the image in the backend
         image = decodedData["image"];
+        ScaffoldMessenger.of(context)
+            .showSnackBar(const SnackBar(content: Text("Paylaşım başarılı")));
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
@@ -141,7 +143,6 @@ class _NewPostScreenState extends State<NewPostScreen> {
                           image: image,
                         );
                         curUser.addPost(post);
-                        Navigator.of(context).pop();
                       }
                     },
                     child: const Text("Paylaşın!"),

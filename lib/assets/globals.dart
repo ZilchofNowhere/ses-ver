@@ -10,6 +10,7 @@ import 'package:latlong2/latlong.dart';
 import 'package:location/location.dart';
 
 // example structures
+const String testIp = "http://172.20.10.3:3000";
 User exUser = User(
   name: "ekocan",
   email: "example@example.com",
